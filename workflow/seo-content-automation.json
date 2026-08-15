@@ -1,0 +1,622 @@
+{
+  "name": "n8n SEO Content Automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        16
+      ],
+      "id": "1afc61fb-4199-4cfb-85aa-4bf5cf5166b6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET",
+          "mode": "list"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Published",
+              "lookupValue": "false"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        16
+      ],
+      "id": "0109b93b-0316-4c74-9ef4-96a06c50e8d3",
+      "name": "Get row(s) in sheet"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5.6-sol",
+          "mode": "list",
+          "cachedResultName": "GPT-5.6-SOL"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=You are an experienced software reviewer and digital marketer with a strong interest in technology, AI, automation, and SaaS software.\n\nWrite a complete, neutral, factual, and informative software guide in English.\n\nTool Name:\n{{$json.Tool}}\n\nCategory:\n{{$json.Category}}\n\n--------------------------------------------------\nGENERAL REQUIREMENTS\n--------------------------------------------------\n\n- Write approximately 2,000–2,500 words.\n- Base every factual statement on verified, publicly available information.\n- Never invent, estimate or guess information.\n- Never invent features, pricing, integrations, company information, statistics, capabilities or URLs.\n- If information cannot be verified, write exactly:\n  Information not publicly available.\n- Maintain a neutral, objective and informative tone.\n- Avoid marketing language, promotional claims and exaggerated statements.\n- Explain concepts clearly for beginners while still providing value for experienced users.\n- Use short, easy-to-read paragraphs.\n- Keep paragraphs between 2–4 sentences whenever possible.\n- Prefer bullet lists and tables where appropriate.\n- Avoid repeating information between sections.\n- Do not include notes, explanations or introductory comments.\n- Every heading below is mandatory.\n- Do not rename, remove, reorder or add headings.\n- Follow the structure exactly.\n\n--------------------------------------------------\nSEO REQUIREMENTS\n--------------------------------------------------\n\nMeta Title:\nMaximum 60 characters.\n\nMeta Description:\nMaximum 155 characters.\n\nExcerpt:\nMaximum 160 characters.\n\nSlug:\nLowercase only.\nUse hyphens.\nNo special characters.\n\nPrimary Keyword:\nUse exactly the Tool Name provided above as the primary keyword.\nDo not modify it.\nDo not add words such as \"guide\", \"review\", \"software\", \"pricing\", or similar.\n\nSecondary Keywords:\nGenerate 5–10 relevant SEO keywords.\n\n--------------------------------------------------\nARTICLE STRUCTURE\n--------------------------------------------------\n\nIntroduction\n\nWrite 2–3 short paragraphs explaining:\n\n- what the software is\n- its primary purpose\n- who it is for\n- why someone would use it\n\n--------------------------------------------------\n\n## Quick Facts\n\nPresent as a valid semantic HTML table using:\n\n<table>\n<thead>\n<tbody>\n<tr>\n<th>\n<td>\n\nInclude:\n\n- Developer\n- Founded\n- Headquarters\n- Category\n- Platforms\n- Deployment\n- Free Plan\n- Paid Plans\n- API\n- Open Source\n- Mobile Apps\n- Official Website\n\nRules:\n\n- Only include verified information.\n- Only use the current official website.\n- Never invent URLs.\nThe \"Official Website\" value must be a clickable HTML link.\n\nReplace \"Tool Name\" with the actual name of the tool.\n\nDo not use the generic text \"Official Website\".\n\nUse exactly this format:\n\n<a href=\"...\" target=\"_blank\" rel=\"noopener noreferrer\">\nTool Name\n</a>\n\n- Never output the website as plain text.\n- If the official website cannot be verified, write:\nInformation not publicly available.\n\n--------------------------------------------------\n\n## What Is [Tool]?\n\nExplain:\n\n- what the software does\n- how it works\n- what problems it solves\n- who typically uses it\n\n--------------------------------------------------\n\n## Key Features\n\nDescribe only officially documented features.\n\nUse HTML bullet lists where appropriate.\n\nNever invent capabilities.\n\n--------------------------------------------------\n\n## Use Cases\n\nDescribe realistic business and personal use cases.\n\n--------------------------------------------------\n\n## Pricing & Plans\n\nDescribe only officially published pricing.\n\nNever estimate.\n\nIf unavailable write:\n\nInformation not publicly available.\n\n--------------------------------------------------\n\n## Pros & Cons\n\n### Pros\n\nUse HTML bullet lists.\n\n### Cons\n\nUse HTML bullet lists.\n\nOnly include realistic advantages and limitations.\n\n--------------------------------------------------\n\n## Integrations\n\nDescribe only officially supported integrations.\n\nNever mention unofficial integrations.\n\nIf unavailable write:\n\nInformation not publicly available.\n\n--------------------------------------------------\n\n## Who Should Use [Tool]?\n\nExplain which users benefit most.\n\nMention industries where relevant.\n\n--------------------------------------------------\n\n## Frequently Asked Questions\n\nAnswer each question in approximately 50–100 words.\n\nQuestions:\n\n- Is [Tool] free?\n- What is [Tool] used for?\n- Is [Tool] worth it?\n- Who should use [Tool]?\n- What are the best alternatives to [Tool]?\n\nRemain completely objective.\n\n--------------------------------------------------\n\n## Conclusion\n\nSummarize:\n\n- what the software does\n- who it is best suited for\n- key strengths\n- key limitations\n\nDo not recommend the software unless supported by verified facts.\n\n--------------------------------------------------\nOUTPUT FORMAT\n--------------------------------------------------\n\nReturn ONLY valid JSON.\n\nDo not include Markdown.\n\nDo not include markdown code fences.\n\nDo not include explanations.\n\nDo not include text before or after the JSON.\n\nUse exactly this schema:\n\n{\n  \"title\": \"\",\n  \"meta_title\": \"\",\n  \"meta_description\": \"\",\n  \"slug\": \"\",\n  \"primary_keyword\": \"\",\n  \"secondary_keywords\": [],\n  \"category\": \"\",\n  \"excerpt\": \"\",\n  \"content\": \"\"\n}\n\nRules:\n\n- The \"content\" field must contain the COMPLETE article in valid semantic HTML.\n- Do NOT include the article title inside \"content\".\n- Begin the article with an introductory paragraph.\n- Use semantic HTML only.\n- Use:\n  <h2>\n  <h3>\n  <p>\n  <ul>\n  <ol>\n  <table>\n  <thead>\n  <tbody>\n  <tr>\n  <th>\n  <td>\n  <blockquote>\n  <strong>\n  <em>\n  <a>\n\n- Do not use Markdown anywhere inside \"content\".\n- Escape quotation marks correctly.\n- Return valid parseable JSON only.\n\n--------------------------------------------------\nFINAL VALIDATION\n--------------------------------------------------\n\nBefore returning the JSON verify:\n\n- JSON is valid.\n- All required JSON fields exist.\n- Title is present.\n- Meta Title is under 60 characters.\n- Meta Description is under 155 characters.\n- Excerpt is under 160 characters.\n- Slug uses lowercase letters and hyphens only.\n- Content contains the complete article.\n- HTML is valid.\n- No Markdown exists inside content.\n- Pricing is verified.\n- Features are verified.\n- Integrations are verified.\n- URLs are official.\n- No information has been invented.\n- The article is internally consistent."
+            },
+            {
+              "content": "=Tool Name:\n{{$json.Tool}}\n\nCategory:\n{{$json.Category}}\n\nGenerate the software guide according to the system instructions."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        16
+      ],
+      "id": "4ac5e586-efb0-4f3c-9f74-d6fd2473022a",
+      "name": "Message a model"
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.output[0].content[0].text;\n\nconst article = JSON.parse(text);\n\narticle.content += `\n<h2>🤖 About This Guide</h2>\n\n<p>This guide was created using a custom AI-powered automation workflow built with <strong>n8n</strong>, <strong>OpenAI</strong> and <strong>WordPress</strong>.</p>\n\n<p>The system automatically researches, writes, formats and publishes objective software tool reviews while maintaining a consistent structure, editorial quality and SEO best practices.</p>\n\n<p><a href=\"https://YOUR-WORDPRESS-SITE.example/projects/building-a-scalable-tool-library-with-ai-and-n8n/\" target=\"_blank\" rel=\"noopener noreferrer\">See how I built the workflow – Building a Scalable Tool Library with AI and n8n</a></p>\n\n<p><a href=\"https://www.linkedin.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Connect with me on LinkedIn</a></p>\n`;\n\nreturn [\n  {\n    json: article\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        16
+      ],
+      "id": "128b907d-e713-4cfd-afb5-322c5565601b",
+      "name": "Code (Append \"About This Guide\")"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-WORDPRESS-SITE.example/wp-json/wp/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{$json.title}}"
+            },
+            {
+              "name": "slug",
+              "value": "={{$json.slug}}"
+            },
+            {
+              "name": "status",
+              "value": "publish"
+            },
+            {
+              "name": "content",
+              "value": "={{$json.content}}"
+            },
+            {
+              "name": "excerpt",
+              "value": "={{$json.excerpt}}"
+            },
+            {
+              "name": "featured_media",
+              "value": "={{$('HTTP Request (Upload Featured Image to WordPress)').item.json.id}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2320,
+        0
+      ],
+      "id": "aff3674d-9b1c-4962-a5d3-1221ed67de42",
+      "name": "HTTP Request (Create WordPress Post)"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-image-1-mini"
+        },
+        "prompt": "=Create a professional featured image for the software tool {{$json.primary_keyword}}.\n\nThe image should have a modern SaaS aesthetic with a clean, premium design.\n\nRequirements:\n- Display the text \"{{$json.primary_keyword}}\"\n- Blue, white and dark gray color palette\n- Technology-inspired background\n- No people\n- No screenshots\n- No watermarks\n- No logos from other companies\n- No additional text except the tool name\n- Suitable as a WordPress featured image",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1040,
+        -160
+      ],
+      "id": "73665fae-fb3c-49d4-b25c-0b6313610dfb",
+      "name": "OpenAI (Generate Featured Image)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-WORDPRESS-SITE.example/wp-json/wp/v2/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename=\"{{$json.slug}}-featured.png\""
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/png"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1248,
+        -160
+      ],
+      "id": "efb343bf-b898-492a-80c5-68e6b3d5d990",
+      "name": "HTTP Request (Upload Featured Image to WordPress)"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1152,
+        -368
+      ],
+      "id": "25f40fe8-f22d-4847-bcc1-767adf26304a",
+      "name": " Merge (Article + Featured Image)"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-image-1-mini"
+        },
+        "prompt": "=Create a premium technology mind map infographic for the software tool \"{{ $('Get row(s) in sheet').item.json.Tool }}\".\n\nImage specifications:\n- Resolution: 1536 × 1024 pixels\n- Landscape orientation\n- High resolution\n- Suitable as a WordPress featured image\n\nDesign:\n- Place the software name \"{{ $('Get row(s) in sheet').item.json.Tool }}\" in the center inside a large glowing circle.\n- Surround the center with one node for each major capability of the software.\n- Generate ONLY the number of nodes required to represent the software accurately (typically between 5 and 8).\n- Every node must contain:\n  - a modern, relevant icon,\n  - a short feature title (1–3 words),\n  - one concise descriptive sentence.\n- Space all nodes evenly around the center.\n- If the software has fewer capabilities, generate fewer nodes rather than empty placeholders.\n\nStyle:\n- Premium SaaS infographic\n- Dark navy blue background\n- Blue and cyan glowing accents\n- Minimal, modern and clean\n- Professional business aesthetic\n- Soft gradients\n- Subtle lighting effects\n- High contrast\n- Consistent icon style\n- Elegant and premium appearance\n\nContent:\n- Automatically determine the software's primary capabilities.\n- Include only real, meaningful features that accurately describe the software.\n- Do not invent features simply to fill space.\n- Every icon must match its feature.\n- Every feature must have its own icon.\n- Display ONLY the software name in the center.\n\nBranding:\n- Place \"YOUR-WEBSITE.example\" centered at the bottom of the image.\n- Use a small, elegant light gray or white font.\n- Keep it subtle and unobtrusive.\n\nRequirements:\n- Never create empty circles.\n- Never create empty icons.\n- Never create placeholder elements.\n- Do not duplicate features.\n- Do not use generic filler text.\n- No people.\n- No watermarks.\n- No screenshots.\n- No fake software interface.\n- No copyrighted UI.\n- The infographic must look complete regardless of whether it contains 5, 6, 7 or 8 capability nodes.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        1456,
+        -160
+      ],
+      "id": "0e0b8fa3-7ad1-41bf-93c7-f37c4f021cfa",
+      "name": "OpenAI (Generate Article Image)"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1584,
+        -368
+      ],
+      "id": "d9e4c5a2-7786-4821-96af-308a33bdbaf5",
+      "name": "Merge  (Article + Article Image)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-WORDPRESS-SITE.example/wp-json/wp/v2/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename={{ $('Get row(s) in sheet').item.json.Tool.toLowerCase().replace(/\\s+/g, '-') }}-article.png"
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/png"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1696,
+        -160
+      ],
+      "id": "c89f317a-937f-47c1-8d92-c77c82c3876c",
+      "name": "HTTP Request (Upload Article Image)"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\n\nconst imageHtml = `\n<figure class=\"wp-block-image size-large\">\n  <img src=\"${item.guid.rendered}\" alt=\"${item.primary_keyword}\" />\n</figure>\n`;\n\nlet count = 0;\n\nitem.content = item.content.replace(/<\\/p>/g, (match) => {\n  count++;\n\n  if (count === 2) {\n    return `</p>\\n${imageHtml}`;\n  }\n\n  return match;\n});\n\nreturn [\n  {\n    json: item\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2144,
+        0
+      ],
+      "id": "587fa758-3154-43c6-a50e-11c295cd2c7b",
+      "name": "Code Insert Article Image Into HTML"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1936,
+        0
+      ],
+      "id": "907cde3e-f6ad-446b-9600-6842cf4da20a",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://YOUR-WORDPRESS-SITE.example/wp-json/custom/v1/yoast",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "post_id",
+              "value": "={{ $('HTTP Request (Create WordPress Post)').item.json.id }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $('Code Insert Article Image Into HTML').item.json.meta_title }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $('Code Insert Article Image Into HTML').item.json.meta_description }}"
+            },
+            {
+              "name": "focus_keyword",
+              "value": "={{ $('Get row(s) in sheet').item.json.Tool }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2528,
+        0
+      ],
+      "id": "2a24163e-18aa-4309-9400-448af3e61e32",
+      "name": "HTTP Request (Update Yoast SEO)"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Published": "TRUE",
+            "Published URL": "={{ $('HTTP Request (Create WordPress Post)').item.json.link }}",
+            "Published Date": "={{ $now.toFormat('yyyy-MM-dd') }}",
+            "Tool": "={{ $('Get row(s) in sheet').item.json.Tool }}"
+          },
+          "matchingColumns": [
+            "Tool"
+          ],
+          "schema": [
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tool",
+              "displayName": "Tool",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Published",
+              "displayName": "Published",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Published URL",
+              "displayName": "Published URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Published Date",
+              "displayName": "Published Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2704,
+        0
+      ],
+      "id": "67a6c2ee-d1d1-4a09-9377-4512262a3194",
+      "name": "Update row in sheet"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code (Append \"About This Guide\")",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code (Append \"About This Guide\")": {
+      "main": [
+        [
+          {
+            "node": "OpenAI (Generate Featured Image)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": " Merge (Article + Featured Image)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Create WordPress Post)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Update Yoast SEO)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI (Generate Featured Image)": {
+      "main": [
+        [
+          {
+            "node": " Merge (Article + Featured Image)",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Upload Featured Image to WordPress)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI (Generate Article Image)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge  (Article + Article Image)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Merge (Article + Featured Image)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Upload Featured Image to WordPress)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI (Generate Article Image)": {
+      "main": [
+        [
+          {
+            "node": "Merge  (Article + Article Image)",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge  (Article + Article Image)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Upload Article Image)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Upload Article Image)": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code Insert Article Image Into HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Insert Article Image Into HTML": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Create WordPress Post)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Update Yoast SEO)": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "nodeGroups": [],
+  "tags": []
+}
