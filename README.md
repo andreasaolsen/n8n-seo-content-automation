@@ -9,18 +9,12 @@ It uses AI to generate the article and supporting images, then publishes the con
 
 ## Workflow
 
-Google Sheets
-↓
-OpenAI
-↓
-Article + SEO metadata
-↓
-AI-generated images
-↓
-WordPress
-↓
-SEO metadata
-↓
+Google Sheets ↓<br>
+OpenAI ↓<br>
+Article + SEO metadata ↓<br>
+AI-generated images ↓<br>
+WordPress ↓<br>
+SEO metadata ↓<br>
 Google Sheets
 
 ### What it does
