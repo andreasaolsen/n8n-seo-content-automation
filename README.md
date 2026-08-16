@@ -41,6 +41,12 @@ The sanitized n8n workflow is available here:
 
 [`workflow/seo-content-automation.json`](workflow/seo-content-automation.json)
 
+The repository also includes the custom WordPress REST API plugin used to update Yoast SEO metadata:
+
+[`wordpress/yoast-rest-api-fields-github-generic.php`](wordpress/yoast-rest-api-fields-github-generic.php)
+
+The WordPress plugin is provided as a template and should be configured to match your own WordPress setup.
+
 ## Security
 
 This repository contains a sanitized version of the workflow.
